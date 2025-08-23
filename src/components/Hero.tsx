@@ -17,7 +17,7 @@ const Hero = () => {
       {/* Floating Elements */}
       <div className="absolute top-20 left-10 w-16 h-16 bg-saffron rounded-full animate-float opacity-60"></div>
       <div className="absolute top-40 right-16 w-12 h-12 bg-sweetPink rounded-full animate-bounce-gentle opacity-50"></div>
-      <div className="absolute bottom-32 left-20 w-20 h-20 bg-gold rounded-full animate-float opacity-40" style={{animationDelay: '1s'}}></div>
+      <div className="absolute bottom-32 left-20 w-20 h-20 bg-gold rounded-full animate-float opacity-40 [animation-delay:1s]"></div>
       
       {/* Content */}
       <div className="relative z-10 text-center px-4 max-w-4xl mx-auto">
