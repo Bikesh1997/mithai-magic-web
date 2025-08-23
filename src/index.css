@@ -1,42 +1,61 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
+/* Indian Sweet Shop Design System - Vibrant & Festive Colors */
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
-
+    /* Main brand colors inspired by Indian sweets */
+    --saffron: 25 100% 60%;           /* Jalebi orange */
+    --saffron-light: 25 100% 75%;     /* Lighter saffron */
+    --sweet-pink: 330 100% 70%;       /* Barfi pink */
+    --sweet-pink-light: 330 100% 85%; /* Lighter pink */
+    --milky-cream: 50 30% 95%;        /* Milk cake cream */
+    --gold: 45 100% 55%;              /* Golden accents */
+    
+    /* Background colors */
+    --background: 50 30% 98%;          /* Warm cream background */
+    --foreground: 25 15% 15%;          /* Dark brown text */
+    
+    /* Component colors */
     --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
-
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
-
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
-
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
-
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
-
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
-
-    --radius: 0.5rem;
+    --card-foreground: 25 15% 15%;
+    
+    --primary: 25 100% 60%;            /* Saffron primary */
+    --primary-foreground: 0 0% 100%;
+    
+    --secondary: 330 100% 70%;         /* Sweet pink secondary */
+    --secondary-foreground: 0 0% 100%;
+    
+    --accent: 50 30% 95%;              /* Milky cream accent */
+    --accent-foreground: 25 15% 15%;
+    
+    --muted: 45 20% 90%;
+    --muted-foreground: 25 10% 40%;
+    
+    /* Interactive elements */
+    --border: 45 25% 85%;
+    --input: 45 25% 85%;
+    --ring: 25 100% 60%;
+    
+    /* Gradients */
+    --gradient-hero: linear-gradient(135deg, hsl(var(--saffron)) 0%, hsl(var(--sweet-pink)) 100%);
+    --gradient-card: linear-gradient(145deg, hsl(var(--milky-cream)) 0%, hsl(var(--background)) 100%);
+    --gradient-button: linear-gradient(135deg, hsl(var(--saffron)) 0%, hsl(var(--gold)) 100%);
+    
+    /* Shadows */
+    --shadow-sweet: 0 10px 30px -5px hsl(var(--saffron) / 0.3);
+    --shadow-card: 0 8px 25px -5px hsl(var(--sweet-pink) / 0.2);
+    --shadow-glow: 0 0 20px hsl(var(--gold) / 0.4);
+    
+    /* Animations */
+    --transition-sweet: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --bounce-sweet: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    
+    --radius: 1rem;
 
     --sidebar-background: 0 0% 98%;
 
@@ -100,6 +119,88 @@ All colors MUST be HSL.
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-poppins;
+  }
+}
+
+@layer components {
+  /* Sweet Button Variants */
+  .btn-hero {
+    @apply bg-gradient-to-r from-[hsl(var(--saffron))] to-[hsl(var(--gold))] 
+           text-white font-semibold px-8 py-4 rounded-2xl 
+           shadow-[var(--shadow-sweet)] hover:shadow-[var(--shadow-glow)]
+           transform hover:scale-105 hover:-translate-y-1
+           transition-all duration-300 ease-[var(--bounce-sweet)];
+  }
+  
+  .btn-secondary {
+    @apply bg-gradient-to-r from-[hsl(var(--sweet-pink))] to-[hsl(var(--sweet-pink-light))] 
+           text-white font-semibold px-6 py-3 rounded-xl
+           shadow-[var(--shadow-card)] hover:shadow-lg
+           transform hover:scale-105 transition-all duration-300;
+  }
+
+  /* Sweet Card Styles */
+  .card-sweet {
+    @apply bg-gradient-to-br from-[hsl(var(--milky-cream))] to-white
+           rounded-3xl p-6 shadow-[var(--shadow-card)]
+           hover:shadow-[var(--shadow-sweet)] hover:-translate-y-2
+           transition-all duration-300 ease-[var(--bounce-sweet)]
+           border border-[hsl(var(--border))];
+  }
+
+  /* Animation Classes */
+  .animate-float {
+    animation: float 3s ease-in-out infinite;
+  }
+  
+  .animate-bounce-gentle {
+    animation: bounce-gentle 2s ease-in-out infinite;
+  }
+  
+  .animate-fade-in-up {
+    animation: fade-in-up 0.6s ease-out forwards;
+  }
+}
+
+@layer utilities {
+  .text-gradient-saffron {
+    background: linear-gradient(135deg, hsl(var(--saffron)), hsl(var(--gold)));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  
+  .text-gradient-sweet {
+    background: linear-gradient(135deg, hsl(var(--sweet-pink)), hsl(var(--saffron)));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  
+  .bg-hero-gradient {
+    background: var(--gradient-hero);
+  }
+}
+
+/* Custom Keyframes */
+@keyframes float {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-10px) rotate(2deg); }
+}
+
+@keyframes bounce-gentle {
+  0%, 100% { transform: translateY(0px) scale(1); }
+  50% { transform: translateY(-5px) scale(1.02); }
+}
+
+@keyframes fade-in-up {
+  0% { 
+    opacity: 0; 
+    transform: translateY(30px); 
+  }
+  100% { 
+    opacity: 1; 
+    transform: translateY(0); 
   }
 }
