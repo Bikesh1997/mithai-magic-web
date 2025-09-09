@@ -15,7 +15,14 @@ import MarkdownPreviewer from "./pages/MarkdownPreviewer";
 import ImageTools from "./pages/ImageTools";
 import Screenshot from "./pages/Screenshot";
 
-const tools = [
+interface Tool {
+  label: string;
+  path: string;
+  color: string;
+  description: string;
+}
+
+const tools: Tool[] = [
   { 
     label: "🏠 Home", 
     path: "/",
@@ -90,7 +97,7 @@ const tools = [
   },
 ];
 
-function ToolCard({ tool, isActive }) {
+function ToolCard({ tool, isActive }: { tool: Tool; isActive: boolean }) {
   return (
     <Link to={tool.path}>
       <div className={`
@@ -151,7 +158,7 @@ function Navigation() {
   );
 }
 
-function ToolWrapper({ children, title }) {
+function ToolWrapper({ children, title }: { children: React.ReactNode; title: string }) {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50">
       <nav className="bg-gradient-to-r from-purple-600 to-pink-600 p-6 text-white">
