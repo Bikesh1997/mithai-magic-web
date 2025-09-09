@@ -1,1 +1,108 @@
-import React, {useRef, useState} from 'react';import Cropper from 'react-cropper';import 'cropperjs/dist/cropper.css';export default function ImageTools(){const [file,setFile]=useState(null);const [src,setSrc]=useState(null);const [croppedUrl,setCroppedUrl]=useState(null);const cropperRef=useRef(null);const [status,setStatus]=useState('');function onDrop(e){e.preventDefault();const f=e.dataTransfer.files[0];handleFile(f);}function onDragOver(e){e.preventDefault();}function handleFileInput(e){const f=e.target.files[0];handleFile(f);}function handleFile(f){if(!f) return;setFile(f);const reader=new FileReader();reader.onload=()=>setSrc(reader.result);reader.readAsDataURL(f);setCroppedUrl(null);setStatus('Ready');}async function convertToPng(){if(!file) return alert('Select file');const fd=new FormData();fd.append('image',file);setStatus('Converting to PNG...');const res=await fetch('/api/convert/jpg-to-png',{method:'POST',body:fd});if(res.ok){const blob=await res.blob();const url=URL.createObjectURL(blob);downloadBlob(url,'converted.png');setStatus('Converted');}else{setStatus('Error converting');}}function downloadBlob(url,name){const a=document.createElement('a');a.href=url;a.download=name;a.click();}async function cropServer(){if(!file) return alert('Select file');const cropper=cropperRef.current?.cropper;if(!cropper) return alert('No cropper');const rect=cropper.getData(true);const fd=new FormData();fd.append('image',file);fd.append('x',rect.x);fd.append('y',rect.y);fd.append('width',rect.width);fd.append('height',rect.height);setStatus('Cropping on server...');const res=await fetch('/api/image/crop',{method:'POST',body:fd});if(res.ok){const blob=await res.blob();const url=URL.createObjectURL(blob);downloadBlob(url,'cropped.png');setStatus('Cropped');}else{const j=await res.json();setStatus('Error: '+(j.error||''));}}async function removeBg(){if(!file) return alert('Select file');setStatus('Removing background...');const fd=new FormData();fd.append('image',file);const res=await fetch('/api/image/remove-bg',{method:'POST',body:fd});if(res.ok){const blob=await res.blob();const url=URL.createObjectURL(blob);downloadBlob(url,'no-bg.png');setStatus('Background removed');}else{const j=await res.json();setStatus('Error: '+(j.error||''));}}function cropClient(){const cropper=cropperRef.current?.cropper;if(!cropper) return;const canvas=cropper.getCroppedCanvas();if(!canvas) return;const url=canvas.toDataURL('image/png');setCroppedUrl(url);downloadBlob(url,'cropped-client.png');}return (<div><h2>Image Tools</h2><div className='card' onDrop={onDrop} onDragOver={onDragOver} style={{padding:20}}><div className='muted'>Drag & drop an image here, or</div><input type='file' accept='image/*' onChange={handleFileInput} />{src && <div style={{marginTop:12}}><div style={{display:'flex',gap:12}}><div style={{flex:1}}><h4>Preview</h4><img src={src} alt='preview' className='preview' /></div><div style={{flex:1}}><h4>Cropper</h4><Cropper src={src} style={{height:300,width:'100%'}} initialAspectRatio={16/9} guides ref={cropperRef} viewMode={1} /><div style={{marginTop:8}}><button className='btn' onClick={cropClient}>Crop (Client)</button><button className='btn' onClick={cropServer} style={{marginLeft:8}}>Crop (Server)</button></div></div></div><div style={{marginTop:12}}><button className='btn' onClick={convertToPng}>Convert to PNG</button><button className='btn' onClick={removeBg} style={{marginLeft:8}}>Remove Background</button></div>{croppedUrl && <div style={{marginTop:12}}><h4>Cropped (client)</h4><img src={croppedUrl} className='preview' /></div>}</div>}</div><div style={{marginTop:12}}>Status: {status}</div></div>)}
+import React, { useRef, useState } from 'react';
+
+export default function ImageTools() {
+  const [file, setFile] = useState(null);
+  const [src, setSrc] = useState(null);
+  const [status, setStatus] = useState('');
+  const fileInputRef = useRef(null);
+
+  function handleFileInput(e) {
+    const f = e.target.files[0];
+    handleFile(f);
+  }
+
+  function handleFile(f) {
+    if (!f) return;
+    setFile(f);
+    const reader = new FileReader();
+    reader.onload = () => setSrc(reader.result);
+    reader.readAsDataURL(f);
+    setStatus('Image loaded! 📸');
+  }
+
+  function downloadImage() {
+    if (!src) return;
+    const a = document.createElement('a');
+    a.href = src;
+    a.download = 'my-image.png';
+    a.click();
+    setStatus('Image downloaded! 🎉');
+  }
+
+  function clearImage() {
+    setFile(null);
+    setSrc(null);
+    setStatus('');
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
+    }
+  }
+
+  return (
+    <div className="max-w-4xl mx-auto">
+      <div className="text-center mb-8">
+        <h2 className="text-3xl font-bold mb-4">🎨 Image Magic Tool! ✨</h2>
+        <p className="text-lg text-gray-600">Pick an image and let's have some fun!</p>
+      </div>
+
+      {/* File Upload Area */}
+      <div className="bg-gradient-to-br from-pink-100 to-purple-100 border-4 border-dashed border-pink-300 rounded-3xl p-12 text-center mb-6">
+        <div className="text-6xl mb-4">🖼️</div>
+        <h3 className="text-2xl font-bold mb-4">Drop your image here!</h3>
+        <input 
+          ref={fileInputRef}
+          type="file" 
+          accept="image/*" 
+          onChange={handleFileInput}
+          className="hidden"
+          id="file-input"
+        />
+        <label 
+          htmlFor="file-input" 
+          className="bg-gradient-to-r from-pink-500 to-purple-500 text-white px-8 py-4 rounded-2xl font-bold text-xl cursor-pointer hover:scale-105 transition-all inline-block"
+        >
+          📁 Choose Image
+        </label>
+      </div>
+
+      {/* Image Preview */}
+      {src && (
+        <div className="bg-white rounded-3xl p-8 shadow-xl">
+          <h3 className="text-2xl font-bold mb-4 text-center">🎯 Your Amazing Image!</h3>
+          <div className="text-center mb-6">
+            <img 
+              src={src} 
+              alt="Your uploaded image" 
+              className="max-w-full max-h-96 rounded-2xl shadow-lg mx-auto"
+            />
+          </div>
+          
+          {/* Action Buttons */}
+          <div className="flex flex-wrap gap-4 justify-center">
+            <button
+              onClick={downloadImage}
+              className="bg-gradient-to-r from-green-400 to-emerald-500 text-white px-6 py-3 rounded-xl font-bold hover:scale-105 transition-all"
+            >
+              💾 Download Image
+            </button>
+            <button
+              onClick={clearImage}
+              className="bg-gradient-to-r from-red-400 to-pink-500 text-white px-6 py-3 rounded-xl font-bold hover:scale-105 transition-all"
+            >
+              🗑️ Clear Image
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* Status */}
+      {status && (
+        <div className="text-center mt-6">
+          <div className="bg-gradient-to-r from-yellow-400 to-orange-500 text-white px-6 py-3 rounded-2xl font-bold text-xl inline-block animate-bounce">
+            {status}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
