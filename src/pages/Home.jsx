@@ -1,0 +1,1 @@
+import React from 'react';export default function Home(){ return <div><h2>Welcome to MiniApps Hub</h2><p>Choose an app from the left.</p></div> }
