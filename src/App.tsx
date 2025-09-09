@@ -24,76 +24,76 @@ interface Tool {
 
 const tools: Tool[] = [
   { 
-    label: "🏠 Home", 
+    label: "Dashboard", 
     path: "/",
-    color: "bg-gradient-to-br from-red-400 to-red-500",
-    description: "Start Here!"
+    color: "bg-slate-50 border-slate-200",
+    description: "Overview and navigation"
   },
   { 
-    label: "👨‍💻 Code Share", 
+    label: "Code Editor", 
     path: "/codeshare",
-    color: "bg-gradient-to-br from-purple-400 to-purple-600",
-    description: "Share Code"
+    color: "bg-blue-50 border-blue-200",
+    description: "Write and format code"
   },
   { 
-    label: "🎨 Image Magic", 
+    label: "Image Processing", 
     path: "/image-tools",
-    color: "bg-gradient-to-br from-pink-400 to-pink-600",
-    description: "Edit Images"
+    color: "bg-purple-50 border-purple-200",
+    description: "Image upload and preview"
   },
   { 
-    label: "📸 Screenshot", 
+    label: "Screenshot Tool", 
     path: "/screenshot",
-    color: "bg-gradient-to-br from-cyan-400 to-blue-500",
-    description: "Capture Screen"
+    color: "bg-cyan-50 border-cyan-200",
+    description: "Capture screenshots"
   },
   { 
-    label: "✨ Code Pretty", 
+    label: "Code Formatter", 
     path: "/code-formatter",
-    color: "bg-gradient-to-br from-emerald-400 to-green-500",
-    description: "Format Code"
+    color: "bg-emerald-50 border-emerald-200",
+    description: "Format and beautify code"
   },
   { 
-    label: "🔍 Text Compare", 
+    label: "Text Diff", 
     path: "/text-diff",
-    color: "bg-gradient-to-br from-orange-400 to-yellow-500",
-    description: "Compare Text"
+    color: "bg-orange-50 border-orange-200",
+    description: "Compare text differences"
   },
   { 
-    label: "🎨 Whiteboard", 
+    label: "Whiteboard", 
     path: "/whiteboard",
-    color: "bg-gradient-to-br from-indigo-400 to-purple-600",
-    description: "Draw Together"
+    color: "bg-indigo-50 border-indigo-200",
+    description: "Digital drawing board"
   },
   { 
-    label: "📋 JSON Fix", 
+    label: "JSON Formatter", 
     path: "/json-formatter",
-    color: "bg-gradient-to-br from-blue-400 to-cyan-500",
-    description: "Format JSON"
+    color: "bg-blue-50 border-blue-200",
+    description: "Format and validate JSON"
   },
   { 
-    label: "🌈 Color Fun", 
+    label: "Color Palette", 
     path: "/color-palette",
-    color: "bg-gradient-to-br from-rose-400 to-pink-500",
-    description: "Pick Colors"
+    color: "bg-rose-50 border-rose-200",
+    description: "Color palette generator"
   },
   { 
-    label: "🔐 Base64", 
+    label: "Base64 Encoder", 
     path: "/base64",
-    color: "bg-gradient-to-br from-green-400 to-emerald-500",
-    description: "Encode/Decode"
+    color: "bg-green-50 border-green-200",
+    description: "Encode and decode Base64"
   },
   { 
-    label: "🔑 UUID Maker", 
+    label: "UUID Generator", 
     path: "/uuid",
-    color: "bg-gradient-to-br from-yellow-400 to-orange-500",
-    description: "Generate IDs"
+    color: "bg-yellow-50 border-yellow-200",
+    description: "Generate unique identifiers"
   },
   { 
-    label: "📝 Markdown", 
+    label: "Markdown Editor", 
     path: "/markdown",
-    color: "bg-gradient-to-br from-violet-400 to-indigo-500",
-    description: "Write Docs"
+    color: "bg-violet-50 border-violet-200",
+    description: "Edit and preview markdown"
   },
 ];
 
@@ -101,13 +101,12 @@ function ToolCard({ tool, isActive }: { tool: Tool; isActive: boolean }) {
   return (
     <Link to={tool.path}>
       <div className={`
-        p-8 rounded-3xl text-white text-center 
-        ${tool.color} ${isActive ? 'animate-pulse shadow-2xl' : 'hover:shadow-xl'} 
-        transition-all duration-300 hover:scale-105 hover:rotate-1 cursor-pointer
-        shadow-lg
+        tool-card p-6 rounded-lg border-2 
+        ${tool.color} ${isActive ? 'ring-2 ring-primary ring-offset-2' : ''} 
+        transition-all duration-200 cursor-pointer
       `}>
-        <h3 className="font-bold text-2xl mb-3">{tool.label}</h3>
-        <p className="text-lg opacity-90 font-medium">{tool.description}</p>
+        <h3 className="font-semibold text-lg mb-2 text-foreground">{tool.label}</h3>
+        <p className="text-sm text-muted-foreground">{tool.description}</p>
       </div>
     </Link>
   );
@@ -117,27 +116,29 @@ function Navigation() {
   const location = useLocation();
   
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50">
+    <div className="min-h-screen bg-background">
       {/* Header */}
-      <header className="bg-gradient-to-r from-purple-600 via-pink-600 to-red-600 p-8 text-white">
-        <div className="max-w-7xl mx-auto text-center">
-          <h1 className="font-bold text-5xl md:text-6xl mb-4 animate-bounce">
-            🚀 Fun Productivity Hub! 🎨
-          </h1>
-          <p className="text-xl opacity-90 font-medium">
-            Pick a super cool tool to get started! ✨
-          </p>
+      <header className="border-b border-border bg-card">
+        <div className="max-w-7xl mx-auto px-6 py-8">
+          <div className="text-center">
+            <h1 className="text-4xl font-bold text-foreground mb-3">
+              Development Tools Hub
+            </h1>
+            <p className="text-lg text-muted-foreground">
+              Professional development utilities and tools
+            </p>
+          </div>
         </div>
       </header>
 
       {/* Tools Grid */}
-      <main className="max-w-7xl mx-auto p-8">
-        <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+      <main className="max-w-7xl mx-auto px-6 py-12">
+        <div className="tools-grid">
           {tools.map((tool, index) => (
             <div 
               key={tool.path} 
-              className="animate-bounce"
-              style={{ animationDelay: `${index * 0.1}s`, animationDuration: '2s' }}
+              className="fade-in"
+              style={{ animationDelay: `${index * 0.1}s` }}
             >
               <ToolCard 
                 tool={tool} 
@@ -149,9 +150,11 @@ function Navigation() {
       </main>
 
       {/* Footer */}
-      <footer className="mt-16 p-8 text-center">
-        <div className="bg-gradient-to-r from-purple-500 to-pink-500 text-white mx-auto inline-block px-8 py-4 rounded-2xl font-bold text-xl animate-pulse">
-          Made with 💖 for Super Cool Kids!
+      <footer className="border-t border-border mt-16 py-8">
+        <div className="max-w-7xl mx-auto px-6 text-center">
+          <p className="text-muted-foreground">
+            Professional Development Tools © 2024
+          </p>
         </div>
       </footer>
     </div>
@@ -160,22 +163,22 @@ function Navigation() {
 
 function ToolWrapper({ children, title }: { children: React.ReactNode; title: string }) {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50">
-      <nav className="bg-gradient-to-r from-purple-600 to-pink-600 p-6 text-white">
-        <div className="max-w-7xl mx-auto flex items-center gap-4">
+    <div className="min-h-screen bg-background">
+      <nav className="border-b border-border bg-card">
+        <div className="max-w-7xl mx-auto px-6 py-4 flex items-center gap-4">
           <Link 
             to="/"
-            className="bg-white/20 hover:bg-white/30 px-6 py-3 rounded-xl flex items-center gap-2 text-lg font-semibold transition-all hover:scale-105"
+            className="professional-button bg-secondary text-secondary-foreground hover:bg-secondary/80 flex items-center gap-2"
           >
-            🏠 Back to Tools
+            ← Back to Tools
           </Link>
-          <h1 className="font-bold text-3xl">
+          <h1 className="text-2xl font-semibold text-foreground">
             {title}
           </h1>
         </div>
       </nav>
-      <main className="max-w-7xl mx-auto p-6">
-        <div className="bg-white rounded-2xl shadow-xl p-6">
+      <main className="max-w-7xl mx-auto px-6 py-8">
+        <div className="bg-card border border-border rounded-lg professional-shadow p-6">
           {children}
         </div>
       </main>
@@ -189,57 +192,57 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Navigation />} />
         <Route path="/codeshare" element={
-          <ToolWrapper title="👨‍💻 Code Share">
+          <ToolWrapper title="Code Editor">
             <Codeshare />
           </ToolWrapper>
         } />
         <Route path="/image-tools" element={
-          <ToolWrapper title="🎨 Image Magic">
+          <ToolWrapper title="Image Processing">
             <ImageTools />
           </ToolWrapper>
         } />
         <Route path="/screenshot" element={
-          <ToolWrapper title="📸 Screenshot Tool">
+          <ToolWrapper title="Screenshot Tool">
             <Screenshot />
           </ToolWrapper>
         } />
         <Route path="/whiteboard" element={
-          <ToolWrapper title="🎨 Whiteboard Fun">
+          <ToolWrapper title="Whiteboard">
             <Whiteboard />
           </ToolWrapper>
         } />
         <Route path="/code-formatter" element={
-          <ToolWrapper title="✨ Code Pretty">
+          <ToolWrapper title="Code Formatter">
             <CodeFormatter />
           </ToolWrapper>
         } />
         <Route path="/text-diff" element={
-          <ToolWrapper title="🔍 Text Compare">
+          <ToolWrapper title="Text Diff">
             <TextDiff />
           </ToolWrapper>
         } />
         <Route path="/json-formatter" element={
-          <ToolWrapper title="📋 JSON Fix">
+          <ToolWrapper title="JSON Formatter">
             <JsonFormatter />
           </ToolWrapper>
         } />
         <Route path="/color-palette" element={
-          <ToolWrapper title="🌈 Color Fun">
+          <ToolWrapper title="Color Palette">
             <ColorPalette />
           </ToolWrapper>
         } />
         <Route path="/base64" element={
-          <ToolWrapper title="🔐 Base64 Tool">
+          <ToolWrapper title="Base64 Encoder">
             <Base64Tool />
           </ToolWrapper>
         } />
         <Route path="/uuid" element={
-          <ToolWrapper title="🔑 UUID Maker">
+          <ToolWrapper title="UUID Generator">
             <UuidTool />
           </ToolWrapper>
         } />
         <Route path="/markdown" element={
-          <ToolWrapper title="📝 Markdown Magic">
+          <ToolWrapper title="Markdown Editor">
             <MarkdownPreviewer />
           </ToolWrapper>
         } />

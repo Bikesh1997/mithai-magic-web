@@ -1,63 +1,63 @@
-@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Playful, bright color palette for child-friendly UI */
+/* Professional color palette */
 :root {
-  --background: 255 251 235;
-  --foreground: 51 51 51;
+  --background: 255 255 255;
+  --foreground: 15 23 42;
   
-  /* Bright, happy colors */
-  --primary: 255 107 107; /* Coral red */
+  /* Professional colors */
+  --primary: 59 130 246; /* Professional blue */
   --primary-foreground: 255 255 255;
   
-  --secondary: 132 204 22; /* Lime green */
-  --secondary-foreground: 255 255 255;
+  --secondary: 241 245 249; /* Light gray */
+  --secondary-foreground: 51 65 85;
   
-  --accent: 255 193 7; /* Sunny yellow */
-  --accent-foreground: 51 51 51;
+  --accent: 99 102 241; /* Indigo accent */
+  --accent-foreground: 255 255 255;
   
   --muted: 248 250 252;
   --muted-foreground: 100 116 139;
   
   --card: 255 255 255;
-  --card-foreground: 51 51 51;
+  --card-foreground: 15 23 42;
   
   --border: 226 232 240;
   --input: 255 255 255;
-  --ring: 255 107 107;
+  --ring: 59 130 246;
   
-  /* Fun tool colors */
-  --fun-purple: 147 51 234; /* Purple */
-  --fun-blue: 59 130 246; /* Blue */
-  --fun-pink: 236 72 153; /* Pink */
-  --fun-orange: 249 115 22; /* Orange */
-  --fun-cyan: 6 182 212; /* Cyan */
-  --fun-emerald: 16 185 129; /* Emerald */
-  --fun-indigo: 99 102 241; /* Indigo */
-  --fun-rose: 244 63 94; /* Rose */
+  /* Professional tool colors */
+  --tool-blue: 59 130 246;
+  --tool-indigo: 99 102 241;
+  --tool-purple: 139 92 246;
+  --tool-emerald: 16 185 129;
+  --tool-orange: 249 115 22;
+  --tool-red: 239 68 68;
+  --tool-cyan: 6 182 212;
+  --tool-gray: 107 114 128;
   
-  --radius: 1rem;
+  --radius: 0.5rem;
 }
 
 .dark {
-  --background: 20 14 40;
-  --foreground: 255 255 255;
-  --primary: 255 107 107;
+  --background: 2 6 23;
+  --foreground: 248 250 252;
+  --primary: 99 102 241;
   --primary-foreground: 255 255 255;
-  --secondary: 132 204 22;
-  --secondary-foreground: 255 255 255;
-  --accent: 255 193 7;
-  --accent-foreground: 51 51 51;
-  --muted: 51 65 85;
+  --secondary: 30 41 59;
+  --secondary-foreground: 226 232 240;
+  --accent: 139 92 246;
+  --accent-foreground: 255 255 255;
+  --muted: 30 41 59;
   --muted-foreground: 148 163 184;
-  --card: 30 41 59;
+  --card: 15 23 42;
   --card-foreground: 248 250 252;
   --border: 51 65 85;
   --input: 30 41 59;
-  --ring: 255 107 107;
+  --ring: 99 102 241;
 }
 
 /* Fun font import moved to top */
@@ -67,81 +67,55 @@
 }
 
 body {
-  @apply bg-background text-foreground font-['Inter',sans-serif] overflow-x-hidden;
+  @apply bg-background text-foreground font-inter antialiased;
 }
 
-/* Fun animations */
-@keyframes wiggle {
-  0%, 100% { transform: rotate(-3deg); }
-  50% { transform: rotate(3deg); }
+/* Professional animations */
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
-@keyframes bounce-soft {
-  0%, 100% { transform: translateY(0px) scale(1); }
-  50% { transform: translateY(-8px) scale(1.05); }
+@keyframes slide-up {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
-@keyframes glow-pulse {
-  0%, 100% { box-shadow: 0 0 20px rgba(255, 107, 107, 0.3); }
-  50% { box-shadow: 0 0 30px rgba(255, 107, 107, 0.6), 0 0 40px rgba(255, 107, 107, 0.3); }
+.fade-in {
+  animation: fade-in 0.6s ease-out;
 }
 
-@keyframes rainbow-shift {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+.slide-up {
+  animation: slide-up 0.8s ease-out;
 }
 
-.wiggle {
-  animation: wiggle 1s ease-in-out infinite;
-}
-
-.bounce-soft {
-  animation: bounce-soft 2s ease-in-out infinite;
-}
-
-.glow-pulse {
-  animation: glow-pulse 2s ease-in-out infinite;
-}
-
-.rainbow-bg {
-  background: linear-gradient(-45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #feca57, #ff9ff3, #54a0ff);
-  background-size: 400% 400%;
-  animation: rainbow-shift 3s ease infinite;
-}
-
-/* Tool card hover effects */
+/* Professional tool card */
 .tool-card {
-  @apply transition-all duration-300 ease-out hover:scale-105 hover:rotate-1 hover:shadow-2xl;
-  transform-origin: center;
+  @apply transition-all duration-200 ease-out hover:shadow-lg hover:-translate-y-1;
+  border: 1px solid hsl(var(--border));
 }
 
 .tool-card:hover {
-  @apply shadow-2xl;
+  @apply shadow-xl border-primary/20;
 }
 
-/* Big friendly buttons */
-.fun-button {
-  @apply px-8 py-6 rounded-2xl font-['Fredoka',sans-serif] font-semibold text-xl 
-         transition-all duration-300 transform hover:scale-110 hover:shadow-xl
+/* Professional button styling */
+.professional-button {
+  @apply px-6 py-3 rounded-lg font-medium text-sm
+         transition-all duration-200 hover:shadow-md
          active:scale-95 cursor-pointer select-none;
 }
 
-/* Icon styling */
-.fun-icon {
-  @apply w-16 h-16 mx-auto mb-4 transition-transform duration-300;
-}
-
-.fun-icon:hover {
-  @apply scale-110 rotate-6;
-}
-
-/* Responsive grid */
+/* Clean grid layout */
 .tools-grid {
   @apply grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4;
 }
 
-/* Playful shadows */
-.playful-shadow {
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1), 0 4px 16px rgba(255, 107, 107, 0.2);
+/* Professional shadows */
+.professional-shadow {
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.professional-shadow-lg {
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
 }
